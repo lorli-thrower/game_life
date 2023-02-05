@@ -1,0 +1,10 @@
+To build this thing on Linux you must have sfml installed. Create build directory, go there, run cmake and then make:
+`
+mkdir build &&
+cd build &&
+cmake .. &&
+make
+`
+
+Then just run life file
+`./life`
