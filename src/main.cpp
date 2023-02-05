@@ -1,8 +1,12 @@
-#include <iostream>
+#include "Life.h"
 
 int main()
 {
-	std::cout << "Hello World!\n";
+	srand(time(0));
+	
+	Life game;
+	
+	game.start();
 	
 	return 0;
 }
