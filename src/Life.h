@@ -17,10 +17,12 @@ private:
 	sf::RectangleShape rect;
 
 	bool** field;
+	bool** newField;
 	sf::Vector2i fieldSize;
 	bool gameOver;
 	
 	void pollEvents();
+	void lifeCycle();
 	void update();
 	void render();
 
