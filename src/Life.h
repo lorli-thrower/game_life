@@ -17,6 +17,10 @@ private:
 	sf::Event event;
 
 	sf::RectangleShape rect;
+	
+	// mouse
+	sf::Vector2i mousePos;
+	bool mouseHeld;
 
 	// timer
 	uint16_t timerMax;
@@ -32,6 +36,7 @@ private:
 	bool pauseHeld; // If you hold space key it will pause and not do a slow-mo
 	uint32_t cellSpeed;
 	
+	void updateMousePos();
 	void pollEvents();
 	void lifeCycle();
 	void update();

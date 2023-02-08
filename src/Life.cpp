@@ -5,6 +5,7 @@ Life::Life()
 {
 	gameOver = false;
 	pause = false;
+	mouseHeld = false;
 	fps = 30;
 	cellSpeed = 5;
 	// window stuff
@@ -54,10 +55,23 @@ void Life::update()
 {
 	pollEvents();
 
+	if (!mouseHeld && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		mouseHeld = true;
+		
+		updateMousePos();
+		// storing cell position to variable so we don't calculate it twise
+		sf::Vector2i cellPos(mousePos.x / rect.getSize().x, mousePos.y / rect.getSize().y);
+		// reversing cell
+		field[cellPos.x][cellPos.y] = !field[cellPos.x][cellPos.y]; 
+	}
+	else if (!sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		mouseHeld = false;
+
 	// life cycle
 	if (!pause)
 	{
-		if (timer == timerMax)
+		if (timer >= timerMax)
 		{
 			lifeCycle();
 			timer = 0;
@@ -145,6 +159,10 @@ void Life::lifeCycle()
 			field[i][j] = newField[i][j];
 }
 
+void Life::updateMousePos()
+{
+	mousePos = sf::Mouse::getPosition(*window);
+}
 
 
 			
