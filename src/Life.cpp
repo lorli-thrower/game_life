@@ -4,6 +4,7 @@
 Life::Life()
 {
 	gameOver = false;
+	pause = false;
 	fps = 30;
 	cellSpeed = 5;
 	// window stuff
@@ -54,12 +55,15 @@ void Life::update()
 	pollEvents();
 
 	// life cycle
-	if (timer == timerMax)
+	if (!pause)
 	{
-		lifeCycle();
-		timer = 0;
+		if (timer == timerMax)
+		{
+			lifeCycle();
+			timer = 0;
+		}
+		else timer++;
 	}
-	else timer++;
 }
 void Life::render()
 {
@@ -86,6 +90,17 @@ void Life::pollEvents()
 		{
 		case sf::Event::Closed:
 			window->close();
+			break;
+		case sf::Event::KeyPressed:
+			if (!pauseHeld && event.key.code == sf::Keyboard::Space)
+			{
+				pause = !pause;
+				pauseHeld = true;
+			}
+			break;
+		case sf::Event::KeyReleased:
+			if (event.key.code == sf::Keyboard::Space)
+				pauseHeld = false;
 			break;
 		}
 	}

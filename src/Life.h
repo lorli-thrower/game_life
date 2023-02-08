@@ -28,6 +28,8 @@ private:
 	sf::Vector2i fieldSize;
 	
 	bool gameOver;
+	bool pause;
+	bool pauseHeld; // If you hold space key it will pause and not do a slow-mo
 	uint32_t cellSpeed;
 	
 	void pollEvents();
