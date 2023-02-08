@@ -4,14 +4,20 @@
 Life::Life()
 {
 	gameOver = false;
+	fps = 30;
+	cellSpeed = 5;
 	// window stuff
 	sf::VideoMode videoMode(900, 900);
 	window = new sf::RenderWindow(videoMode, "Life", sf::Style::Titlebar | sf::Style::Close);
-	window->setFramerateLimit(5);
+	window->setFramerateLimit(fps);
 	
 	// rect stuff
-	rect.setSize(sf::Vector2f(30, 30));
+	rect.setSize(sf::Vector2f(10, 10));
 	rect.setFillColor(sf::Color::Green);
+
+	// timer
+	timerMax = fps / cellSpeed;
+	timer = 0;
 	
 	// field stuff
 	fieldSize = sf::Vector2i(window->getSize().x / rect.getSize().x, window->getSize().y / rect.getSize().y);
@@ -24,7 +30,7 @@ Life::Life()
 	// randomizing field
 	for (int i = 0; i < fieldSize.x; i++)
 		for (int j = 0; j < fieldSize.y; j++)
-			field[i][j] = (rand() % 3 == 0);
+			field[i][j] = (rand() % 5 == 0);
 
 }
 Life::~Life()
@@ -48,8 +54,12 @@ void Life::update()
 	pollEvents();
 
 	// life cycle
-	lifeCycle();
-
+	if (timer == timerMax)
+	{
+		lifeCycle();
+		timer = 0;
+	}
+	else timer++;
 }
 void Life::render()
 {
